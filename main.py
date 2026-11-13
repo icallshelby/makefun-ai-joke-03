@@ -1,9 +1,7 @@
-"""Competition ai-joke-03:
-writes one fixed joke about AI coding agents to entry.txt."""
-
 import os
+import sys
 
-JOKE = "My AI coding agent wrote “I have no idea why this works, but do not touch it” in a comment, which is exactly how my ancestors described fire."
+JOKE = "Asked my coding agent to fix a merge conflict. It force-pushed a single commit, 'in the beginning,' over our 10-year history, and git blame now says it wrote every line. Technically, the conflict is gone. So is everyone who could have caused one."
 
 def main():
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
@@ -13,17 +11,14 @@ def main():
     with open(out_path, "w", encoding="utf-8") as f:
         f.write(JOKE)
         
-    expected_bytes = JOKE.encode("utf-8")
+    joke_bytes = JOKE.encode("utf-8")
     with open(out_path, "rb") as f:
         written_bytes = f.read()
-        
-    if len(written_bytes) != len(expected_bytes):
-        import sys
-        print(f"Error: byte size mismatch! Expected {len(expected_bytes)}, got {len(written_bytes)}", file=sys.stderr)
+    if len(written_bytes) != len(joke_bytes):
+        print(f"Error: byte size mismatch! Expected {len(joke_bytes)}, got {len(written_bytes)}", file=sys.stderr)
         sys.exit(1)
+    print("Verification passed: written byte size matches expected length.")
         
-    print("Verification passed: written byte size matches expected byte length.")
-
     char_count = len(JOKE)
     print(f"Output path: {out_path}")
     print(f"Character count: {char_count}")
